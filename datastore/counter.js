@@ -29,7 +29,7 @@ const writeCounter = (count, callback) => {
   var counterString = zeroPaddedNumber(count);
   fs.writeFile(exports.counterFile, counterString, (err) => {
     if (err) {
-      throw ('error writing counter');
+      throw 'error writing counter';
     } else {
       callback(null, counterString);
     }
@@ -38,12 +38,27 @@ const writeCounter = (count, callback) => {
 
 // Public API - Fix this function //////////////////////////////////////////////
 
-exports.getNextUniqueId = () => {
-  counter = counter + 1;
-  return zeroPaddedNumber(counter);
+exports.getNextUniqueId = (callback) => {
+  // need to use readCounter and writeCounter functions
+  // counter = counter + 1;
+  // return zeroPaddedNumber(counter);
+  readCounter((count, err) => {
+    if (err) {
+      callback(err, count);
+    } else {
+      console.log('test before: ', count);
+      count++;
+      writeCounter(count, (err, id) => {
+        if (err) {
+          callback(err, count);
+        } else {
+          console.log('test: ', count);
+          callback(err, id);
+        }
+      });
+    }
+  });
 };
-
-
 
 // Configuration -- DO NOT MODIFY //////////////////////////////////////////////
 
