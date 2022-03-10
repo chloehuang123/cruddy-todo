@@ -42,18 +42,18 @@ exports.getNextUniqueId = (callback) => {
   // need to use readCounter and writeCounter functions
   // counter = counter + 1;
   // return zeroPaddedNumber(counter);
-  readCounter((count, err) => {
+  readCounter((err, count) => {
     if (err) {
       callback(err, count);
     } else {
-      console.log('test before: ', count);
+      // console.log('test before: ', counterString);
       count++;
-      writeCounter(count, (err, id) => {
+      writeCounter(count, (err, counterString) => {
         if (err) {
           callback(err, count);
         } else {
-          console.log('test: ', count);
-          callback(err, id);
+          // console.log('test: ', count);
+          callback(err, counterString);
         }
       });
     }
