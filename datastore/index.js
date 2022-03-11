@@ -8,13 +8,12 @@ const counter = require('./counter');
 // Public API - Fix these CRUD functions ///////////////////////////////////////
 
 exports.create = (text, callback) => {
-
   counter.getNextUniqueId((err, id)=>{
     if(err) {
-      callback(err);
+      callback(err, null);
     }else {
       //success
-      var filePath = path.join( exports.dataDir, id, '.txt');
+      var filePath = `${exports.dataDir}/${id}.txt`;
       fs.writeFile(filePath, text, (err) => {
         if (err) {
           callback(err);
